@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bar • Inuman Sessions</title>
+    <link rel="stylesheet" href="inuman-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body> 
+
+    <div class="tagalog-background">Alak ng Pinoy</div>
+    <div class="bg-pattern-layer"></div>
+    <div class="bg-layer"></div>
+
+    <header class="navbar">
+        <a href="filipino.html" class="back-btn">
+            <span>&larr; Return to Day Mode</span>
+        </a>
+        <div class="brand">
+            FATIKEM <span class="highlight">BAR</span>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        
+        <section class="hero">
+            <h1>Late Night Sessions</h1>
+            <p>Premium Spirits & Authentic Pulutan</p>
+        </section>
+
+        <section class="menu-section">
+            <h2 class="section-header">Bar Selection</h2>
+            <div class="menu-grid">
+                
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="../cuisine/local drinks.png" alt="Beers">
+                    </div>
+                    <div class="card-content">
+                        <h3>Local Beers</h3>
+                        <ul class="clean-list">
+                            <li>San Miguel Pale Pilsen</li>
+                            <li>Red Horse Extra Strong</li>
+                            <li>San Mig Light</li>
+                            <li>Cerveza Negra</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="../cuisine/hard.png" alt="Hard Liquor">
+                    </div>
+                    <div class="card-content">
+                        <h3>Spirits</h3>
+                        <ul class="clean-list">
+                            <li>Ginebra San Miguel</li>
+                            <li>Emperador Brandy</li>
+                            <li>Fundador</li>
+                            <li>Tanduay Rhum (Dark/Gold)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="../cuisine/mixes.png" alt="Mixes">
+                    </div>
+                    <div class="card-content">
+                        <h3>Signature Mixes</h3>
+                        <ul class="clean-list">
+                            <li>Gin + Calamansi</li>
+                            <li>Rum Coke</li>
+                            <li>Lambanog (Coconut Wine)</li>
+                            <li>Weng-Weng</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="pulutan-section">
+            <h2 class="section-header">Chef's Pulutan</h2>
+            <p class="subtitle">Click a dish to view the recipe</p>
+            
+            <div class="pulutan-grid">
+                
+                <div class="dish-card" onclick="openRecipe('sisig')">
+                    <img src="../cuisine/sisig.png" alt="Sisig">
+                    <div class="dish-overlay">
+                        <div class="dish-info">
+                            <h3>Sizzling Sisig</h3>
+                            <span>Pork Mask • Liver • Calamansi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dish-card" onclick="openRecipe('tokwatbaboy')">
+                    <img src="../cuisine/tokwatbaboy.png" alt="Tokwa't Baboy">
+                    <div class="dish-overlay">
+                        <div class="dish-info">
+                            <h3>Tokwa't Baboy</h3>
+                            <span>Crispy Tofu • Pork • Vinegar Soy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dish-card" onclick="openRecipe('liempo')">
+                    <img src="../cuisine/liempo.png"alt="Liempo">
+                    <div class="dish-overlay">
+                        <div class="dish-info">
+                            <h3>Inihaw na Liempo</h3>
+                            <span>Grilled Pork Belly • Spiced Marinade</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dish-card" onclick="openRecipe('gambas')">
+                    <img src="../cuisine/gambas.png"alt="Gambas">
+                    <div class="dish-overlay">
+                        <div class="dish-info">
+                            <h3>Spicy Gambas</h3>
+                            <span>Shrimp • Garlic • Chili Oil</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="recipeModal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            
+            <div class="modal-header">
+                <h2 id="modalTitle">Dish Name</h2>
+                <p id="modalDesc">Description goes here...</p>
+            </div>
+
+            <div class="modal-content-split">
+                <div class="ingredients-col">
+                    <h4>Ingredients</h4>
+                    <ul id="modalIngredients"></ul>
+                </div>
+                <div class="instructions-col">
+                    <h4>Preparation</h4>
+                    <div id="modalSteps"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="inuman-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+/* RESET & VARIABLES */
+:root {
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-gold: #c9a227; /* Professional Gold */
+    --overlay-color: rgba(0, 0, 0, 0.7);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* BACKGROUND IMAGE */
+.bg-pattern-layer {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(45deg, rgba(49, 49, 49, 0.23) 0, rgba(0,0,0,0.02) 1px, transparent 0, transparent 50%),
+                    repeating-linear-gradient(-45deg, rgba(49, 49, 49, 0.23) 0, rgba(0,0,0,0.02) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 9999;
+}
+.tagalog-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 14vw; 
+    color: rgba(255, 255, 0, 0.092); 
+    white-space: nowrap;
+    z-index: 1; 
+    pointer-events: none;
+}
+
+.bg-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url('../cuisine/Filipino Image/night-market-bg.jpg') no-repeat center center/cover;
+    filter: brightness(0.3);
+    z-index: -1;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    background: rgba(15, 15, 15, 0.9);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.back-btn {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.back-btn:hover {
+    color: var(--accent-gold);
+}
+
+.brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.brand .highlight {
+    color: var(--accent-gold);
+}
+
+/* CONTENT CONTAINER */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 0 80px;
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #fff, #b3b3b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* SHARED HEADERS */
+.section-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-left: 4px solid var(--accent-gold);
+}
+
+/* DRINKS MENU */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 100px;
+}
+
+.menu-card {
+    background: var(--card-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    height: 200px;
+    width: 100%;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%);
+    transition: filter 0.3s ease;
+}
+
+.menu-card:hover .card-img img {
+    filter: grayscale(0%);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--accent-gold);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.clean-list {
+    list-style: none;
+}
+
+.clean-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.clean-list li:last-child {
+    border-bottom: none;
+}
+
+/* PULUTAN SECTION (Image Only Grid) */
+.subtitle {
+    color: var(--text-secondary);
+    margin-top: -20px;
+    margin-bottom: 30px;
+    padding-left: 25px;
+}
+
+.pulutan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.dish-card {
+    position: relative;
+    height: 350px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.dish-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.dish-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 30px 20px 20px;
+    transition: opacity 0.3s ease;
+}
+
+.dish-info h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.dish-info span {
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+/* Hover Effects */
+.dish-card:hover img {
+    transform: scale(1.1);
+}
+
+/* MODAL STYLES */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background: #151515;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid #333;
+    padding: 50px;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--accent-gold);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.modal-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.modal-header p {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.modal-content-split {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.ingredients-col {
+    flex: 1;
+    min-width: 250px;
+    background: #111;
+    padding: 25px;
+    border-radius: 4px;
+}
+
+.instructions-col {
+    flex: 2;
+    min-width: 300px;
+}
+
+.modal-content-split h4 {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Modal Lists */
+#modalIngredients {
+    list-style: none;
+}
+
+#modalIngredients li {
+    padding: 8px 0;
+    border-bottom: 1px solid #222;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+#modalSteps ol {
+    padding-left: 20px;
+    color: var(--accent-gold);
+}
+
+#modalSteps li {
+    margin-bottom: 20px;
+    color: #ddd;
+    padding-left: 10px;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}

@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+
+# 1. Create a dataset of 5 entries (AI Model Accuracy Scores)
+data = {
+    'Model_Name': ['Model_A', 'Model_B', 'Model_C', 'Model_D', 'Model_E'],
+    'Accuracy_Score': [0.85, 0.92, 0.78, 0.95, 0.88]
+}
+
+# 2. Store data in a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# 3. Perform computations
+mean_val = df['Accuracy_Score'].mean()
+max_val = df['Accuracy_Score'].max()
+min_val = df['Accuracy_Score'].min()
+
+# 4. Display Summary Output
+print("--- AI Model Dataset ---")
+print(df)
+print("\n--- Statistical Summary ---")
+print(f"Mean Accuracy:    {mean_val:.2f}")
+print(f"Highest Accuracy: {max_val}")
+print(f"Lowest Accuracy:  {min_val}")

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatikem</title>
+    <link rel="icon" href="../images/recipe-logo-removebg-preview.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="singup.css">
+</head>
+<body>
+
+<main class="auth-container">
+    
+    <section class="editorial-panel">
+        <div class="visual-layer login-visual active">
+            <img src="../images/chocolate-lava-cake-m0mMnfjm.jpg" alt="Plated Dish">
+            <div class="editorial-text">
+                <h2>The Joy of Plating</h2>
+                <p>Pick up exactly where you left off.</p>
+            </div>
+        </div>
+        <div class="visual-layer signup-visual">
+            <img src="../images/Risotto alla Milanese.png" alt="Raw Ingredients">
+            <div class="editorial-text">
+                <h2>Fresh Ingredients</h2>
+                <p>Curate your cookbook. Share your craft.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="interaction-panel">
+        
+        <header class="auth-header">
+            <div class="logo">Fatikem.</div>
+            <div class="toggle-container">
+                <button class="toggle-btn active" id="btn-login" data-target="login">Login</button>
+                <button class="toggle-btn" id="btn-signup" data-target="signup">Join</button>
+            </div>
+        </header>
+
+        <div class="forms-wrapper">
+            
+            <form id="login-form" class="auth-form active" novalidate>
+                <div class="form-header">
+                    <h1>Welcome back<br>to your kitchen.</h1>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="login-email" name="email" required placeholder=" " autocomplete="off">
+                    <label for="login-email">Email Address</label>
+                    <span class="helper-text"></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="login-pass" name="password" required placeholder=" " autocomplete="off">
+                    <label for="login-pass">Password</label>
+                    <button type="button" class="show-hide-btn" aria-label="Toggle password visibility">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="link-btn" id="forgot-pass-trigger">Forgot password?</button>
+                    <button type="submit" class="primary-btn">
+                        <span>Enter Kitchen</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+            </form>
+
+            <form id="signup-form" class="auth-form" novalidate>
+                <div class="form-header">
+                    <h1>Mise en place.<br>Let’s get started.</h1>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <input type="text" id="signup-fname" name="first_name" required placeholder=" ">
+                        <label for="signup-fname">First Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="signup-lname" name="last_name" required placeholder=" ">
+                        <label for="signup-lname">Last Name</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="signup-email" name="email" required placeholder=" ">
+                    <label for="signup-email">Culinary Email</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="signup-pass" name="password" required placeholder=" ">
+                    <label for="signup-pass">Create Password</label>
+                    <div class="password-strength-meter">
+                        <div class="bar"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn">
+                        <span>Start Cooking</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+            </form>
+            
+            <div id="forgot-panel" class="overlay-panel">
+                <button type="button" class="close-overlay">×</button>
+                <h3>Recover Access</h3>
+                <p>We'll send a magic link to your inbox.</p>
+                <div class="input-group">
+                    <input type="email" id="recover-email" required placeholder=" ">
+                    <label for="recover-email">Email Address</label>
+                </div>
+                <button type="button" id="send-recovery-btn" class="primary-btn full-width">Send Link</button>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="singup.js"></script>
+</body>
+</html>
