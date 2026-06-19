@@ -5,16 +5,15 @@ error_reporting(E_ALL);
 $database_url = getenv('DATABASE_URL');
 
 if ($database_url) {
-
     $db_config = parse_url($database_url);
     
     $host     = $db_config['host'];
     $port     = $db_config['port'] ?? '5432';
     $dbname   = ltrim($db_config['path'], '/');
-    $user     = $db_config['user'];
-    $password = $db_config['pass'];
+    // Added urldecode to safely decode any special characters in credentials
+    $user     = urldecode($db_config['user']);
+    $password = urldecode($db_config['pass']);
 } else {
-
     $host     = "localhost";
     $port     = "5432";
     $dbname   = "fatikem";
@@ -25,7 +24,6 @@ if ($database_url) {
 try {
     $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
     $pdo = new PDO($dsn, $user, $password);
-
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("DB connection failed: " . $e->getMessage());
