@@ -9,6 +9,18 @@ $last_name = $_SESSION['last_name'] ?? '';
 $initials = ($first_name || $last_name) ? strtoupper(substr($first_name, 0, 1) . substr($last_name, 0, 1)) : '';
 $bgColor = sprintf('#%02X%02X%02X', rand(100, 255), rand(100, 255), rand(100, 255));
 
+// Safe space-encoded URL builder for the session user's profile image
+$sessionUserImg = '';
+if (!empty($profile_pic)) {
+    if (strpos($profile_pic, '/') !== false) {
+        $sessionSegments = explode('/', $profile_pic);
+        $encodedSessionSegments = array_map('rawurlencode', $sessionSegments);
+        $sessionUserImg = str_replace('%2E%2E', '..', implode('/', $encodedSessionSegments));
+    } else {
+        $sessionUserImg = '../images/' . rawurlencode($profile_pic);
+    }
+}
+
 try {
     // Dynamically retrieve Indian recipes from database table rows
     $query = "SELECT r.*, 
@@ -21,7 +33,8 @@ try {
     FROM recipes r
     JOIN users u ON r.author_id = u.id
     JOIN cuisines c ON r.cuisine_id = c.id
-    WHERE LOWER(c.name) = 'india' OR LOWER(c.name) = 'indian'";
+    WHERE LOWER(c.name) = 'india' OR LOWER(c.name) = 'indian'
+    ORDER BY r.created_at DESC";
     
     $stmt = $pdo->query($query);
     $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -57,7 +70,7 @@ try {
         <nav class="nav-links">
             <a href="../main-page/mainpage.php">Home</a>
             <a href="../explore/explore.php">Explore</a>
-            <a href="../cuisine/cuisine.html" class="active">Cuisine</a>
+            <a href="../cuisine/cuisine.php" class="active">Cuisine</a>
         </nav>
 
         <div class="nav-actions">
@@ -66,8 +79,8 @@ try {
                 Add Recipe
             </button>
             <div class="profile-icon" onclick="window.location.href='../profile/profile.php'">
-                <?php if (!empty($profile_pic)): ?>
-                    <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="Profile">
+                <?php if (!empty($sessionUserImg)): ?>
+                    <img src="<?php echo htmlspecialchars($sessionUserImg); ?>" alt="Profile" class="profile-img">
                 <?php else: ?>
                     <div class="user-initials" style="background-color: <?php echo $bgColor; ?>;">
                         <?php echo htmlspecialchars($initials); ?>
@@ -89,6 +102,7 @@ try {
     <section class="explore-section">
         <div class="recipe-grid">
             <?php foreach ($recipes as $row): 
+                // Fix recipe image layout containing spaces
                 if (!empty($row['image'])) {
                     if (strpos($row['image'], '/') !== false) {
                         $pathSegments = explode('/', $row['image']);
@@ -101,7 +115,19 @@ try {
                     $cardImg = '../images/recipe-placeholder.jpg';
                 }
 
-                $authorImg = !empty($row['profile_pic']) ? htmlspecialchars($row['profile_pic']) : '../images/default-avatar.png';
+                // Fix author layout containing spaces
+                if (!empty($row['profile_pic'])) {
+                    if (strpos($row['profile_pic'], '/') !== false) {
+                        $authorSegments = explode('/', $row['profile_pic']);
+                        $encodedAuthorSegments = array_map('rawurlencode', $authorSegments);
+                        $authorImg = str_replace('%2E%2E', '..', implode('/', $encodedAuthorSegments));
+                    } else {
+                        $authorImg = '../images/' . rawurlencode($row['profile_pic']);
+                    }
+                } else {
+                    $authorImg = '../images/default-avatar.png';
+                }
+
                 $ratingDisplay = number_format($row['avg_rating'], 1);
                 
                 $diff = strtolower($row['difficulty'] ?? 'easy');
@@ -213,8 +239,8 @@ try {
                     <h3>Comments (<span id="commentCount">0</span>)</h3>
                     <div class="comment-input-area">
                         <div class="avatar-placeholder">
-                            <?php if(!empty($profile_pic)): ?>
-                                <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="User Avatar">
+                            <?php if(!empty($sessionUserImg)): ?>
+                                <img src="<?php echo htmlspecialchars($sessionUserImg); ?>" alt="User Avatar">
                             <?php else: ?>
                                 <?php echo htmlspecialchars($initials); ?>
                             <?php endif; ?>
