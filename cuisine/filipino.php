@@ -2,13 +2,27 @@
 session_start();
 require_once('../config/db.php'); 
 
+// Fetch current session properties for user layout tracking
 $profile_pic = $_SESSION['profile_pic'] ?? ''; 
 $first_name = $_SESSION['first_name'] ?? '';
 $last_name = $_SESSION['last_name'] ?? '';
 $initials = ($first_name || $last_name) ? strtoupper(substr($first_name, 0, 1) . substr($last_name, 0, 1)) : '';
 $bgColor = sprintf('#%02X%02X%02X', rand(100, 255), rand(100, 255), rand(100, 255));
 
+// Safe space-encoded URL builder for the session user's profile image
+$sessionUserImg = '';
+if (!empty($profile_pic)) {
+    if (strpos($profile_pic, '/') !== false) {
+        $sessionSegments = explode('/', $profile_pic);
+        $encodedSessionSegments = array_map('rawurlencode', $sessionSegments);
+        $sessionUserImg = str_replace('%2E%2E', '..', implode('/', $encodedSessionSegments));
+    } else {
+        $sessionUserImg = '../images/' . rawurlencode($profile_pic);
+    }
+}
+
 try {
+    // Dynamically retrieve Filipino recipes from database table rows
     $query = "SELECT r.*, 
         u.first_name, u.last_name, u.profile_pic,
         c.name as cuisine_name,
@@ -42,7 +56,7 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../main-page/modal.css">
     <link rel="stylesheet" href="filipino.css">
-    <link rel="icon" href="../images/recipe-logo-removebg-preview.png" type="image/png">
+    <link class="site-favicon" rel="icon" href="../images/recipe-logo-removebg-preview.png" type="image/png">
 </head>
 <body>
 
@@ -66,8 +80,8 @@ try {
                 Add Recipe
             </button>
             <div class="profile-icon" onclick="window.location.href='../profile/profile.php'">
-                <?php if (!empty($profile_pic)): ?>
-                    <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="Avatar image" class="profile-img">
+                <?php if (!empty($sessionUserImg)): ?>
+                    <img src="<?php echo htmlspecialchars($sessionUserImg); ?>" alt="Profile" class="profile-img">
                 <?php else: ?>
                     <div class="user-initials" style="background-color: <?php echo $bgColor; ?>;">
                         <?php echo htmlspecialchars($initials); ?>
@@ -92,6 +106,7 @@ try {
     <section class="explore-section">
         <div class="recipe-grid">
             <?php foreach ($recipes as $row): 
+                // Fix recipe image layout containing spaces
                 if (!empty($row['image'])) {
                     if (strpos($row['image'], '/') !== false) {
                         $pathSegments = explode('/', $row['image']);
@@ -104,7 +119,19 @@ try {
                     $cardImg = '../images/recipe-placeholder.jpg';
                 }
 
-                $authorImg = !empty($row['profile_pic']) ? htmlspecialchars($row['profile_pic']) : '../images/default-avatar.png';
+                // Fix author layout containing spaces
+                if (!empty($row['profile_pic'])) {
+                    if (strpos($row['profile_pic'], '/') !== false) {
+                        $authorSegments = explode('/', $row['profile_pic']);
+                        $encodedAuthorSegments = array_map('rawurlencode', $authorSegments);
+                        $authorImg = str_replace('%2E%2E', '..', implode('/', $encodedAuthorSegments));
+                    } else {
+                        $authorImg = '../images/' . rawurlencode($row['profile_pic']);
+                    }
+                } else {
+                    $authorImg = '../images/default-avatar.png';
+                }
+
                 $ratingDisplay = number_format($row['avg_rating'], 1);
                 
                 $diff = strtolower($row['difficulty'] ?? 'easy');
@@ -144,7 +171,6 @@ try {
         </div>
     </section>
 
-    <!-- Refactored Modal Overlay Module matching Explore Page structure -->
     <div class="modal-overlay" id="recipeModal">
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn" onclick="closeRecipe()">&times;</button>
@@ -217,8 +243,8 @@ try {
                     <h3>Comments (<span id="commentCount">0</span>)</h3>
                     <div class="comment-input-area">
                         <div class="avatar-placeholder">
-                            <?php if(!empty($profile_pic)): ?>
-                                <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="User Avatar">
+                            <?php if(!empty($sessionUserImg)): ?>
+                                <img src="<?php echo htmlspecialchars($sessionUserImg); ?>" alt="User Avatar">
                             <?php else: ?>
                                 <?php echo htmlspecialchars($initials); ?>
                             <?php endif; ?>
