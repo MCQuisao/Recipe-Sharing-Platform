@@ -79,12 +79,22 @@ try {
                 Add Recipe
             </button>
             <div class="profile-icon" onclick="window.location.href='../profile/profile.php'">
-                <?php if (!empty($sessionUserImg)): ?>
-                    <img src="<?php echo htmlspecialchars($sessionUserImg); ?>" alt="Profile" class="profile-img">
-                <?php else: ?>
-                    <div class="user-initials" style="background-color: <?php echo $bgColor; ?>;">
-                        <?php echo htmlspecialchars($initials); ?>
+                <?php if(!empty($profile_pic)): ?>
+                    <div class="profile-icon">
+                        <a href="../profile/profile.php">
+                            <img src="<?php echo htmlspecialchars($profile_pic); ?>" class="profile-img">
+                        </a>
                     </div>
+                <?php elseif($initials): ?>
+                    <div class="profile-icon">
+                        <a href="../profile/profile.php" style="text-decoration: none;">
+                            <div class="user-initials" style="background-color: <?php echo $bgColor; ?>;">
+                                <?php echo $initials; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <a href="../sign up/singup.html" class="login-link">Login</a>
                 <?php endif; ?>
             </div>
         </div>
